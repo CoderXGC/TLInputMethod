@@ -435,6 +435,7 @@ public class T9InputViewGroup extends NonScrollViewGroup {
     /**
      * 功能：监听九键键盘的touch事件
      * 调用时机：touch 九键键盘
+     * //TODO 这里的监听事件修改英文
      */
     private View.OnTouchListener mInputViewOnTouchListener = new View.OnTouchListener() {
         public boolean onTouch(View v, MotionEvent event) {
