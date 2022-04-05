@@ -16,8 +16,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Color;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,7 +44,11 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.hit.wi.t9.R;
 import com.hit.wi.t9.values.Global;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.umeng.analytics.MobclickAgent;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * @author winlandiano
@@ -106,12 +113,17 @@ public final class GuideActivity extends Activity implements OnTouchListener {
         super.onDestroy();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.guide_page);
-
+        if (! Settings.canDrawOverlays(GuideActivity.this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent,10);
+        }
         screenLayout = (RelativeLayout) findViewById(R.id.guide_page);
         screenLayout.setFocusable(true);
         screenLayout.setOnTouchListener(this);
@@ -206,6 +218,7 @@ public final class GuideActivity extends Activity implements OnTouchListener {
             page6Success.setText(getString(R.string.guide_page6_success));
             page6Success.setBackgroundColor(Color.argb(0, 0, 0, 0));
             page6Success.setClickable(false);
+
         }
 
         if (currentPage == 6) {
@@ -602,4 +615,15 @@ public final class GuideActivity extends Activity implements OnTouchListener {
             }
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 10) {
+            if (!Settings.canDrawOverlays(this)) {
+                // SYSTEM_ALERT_WINDOW permission not granted...
+                Toast.makeText(GuideActivity.this,"not granted",Toast.LENGTH_SHORT);
+            }
+        }
+    }
+
 }

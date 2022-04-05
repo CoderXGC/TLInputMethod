@@ -3,7 +3,10 @@ package com.hit.wi.t9.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -109,13 +112,50 @@ public class LightViewManager {
     public void addToWindow(){
         if (!viewsWraper.isShown()){
             WindowManager wm  = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-            viewsParams = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.TYPE_PHONE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                            | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    1
-                    );
+            // 设置窗体显示类型
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Log.d("测试","执行了1");
+                viewsParams = new WindowManager.LayoutParams(
+                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        1
+                );
+            } else {
+                Log.d("测试","执行了2");
+                viewsParams = new WindowManager.LayoutParams(
+                        WindowManager.LayoutParams.TYPE_PHONE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        1
+                );
+            }
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//
+//                viewsParams = new WindowManager.LayoutParams(
+//                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+//                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+//                                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+//                                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                        1
+//                );
+//            }
+//            else {
+//                viewsParams = new WindowManager.LayoutParams(
+//                        WindowManager.LayoutParams.TYPE_PHONE,
+//                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+//                                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+//                                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                        1
+//                );
+//
+//            }
+
             viewsParams.gravity = Gravity.TOP | Gravity.LEFT;
             try {
                 wm.addView(viewsWraper,viewsParams);

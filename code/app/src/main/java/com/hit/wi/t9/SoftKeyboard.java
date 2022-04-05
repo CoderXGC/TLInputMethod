@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -1373,7 +1374,15 @@ public final class SoftKeyboard extends InputMethodService implements SoftKeyboa
                 WindowManager wm = (WindowManager) getApplicationContext().getSystemService(WINDOW_SERVICE);
                 screenInfoC.LoadKeyboardSizeInfoFromSharedPreference();
 
-                keyboardParams.type = LayoutParams.TYPE_PHONE;
+// 设置窗体显示类型
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    keyboardParams.type = LayoutParams.TYPE_APPLICATION_OVERLAY;
+                  //  layoutParams.type =WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                }
+                else {
+                    keyboardParams.type = LayoutParams.TYPE_PHONE;
+                }
+
                 keyboardParams.format = 1;
                 keyboardParams.flags = DISABLE_LAYOUTPARAMS_FLAG;
                 keyboardParams.gravity = Gravity.TOP | Gravity.LEFT;
