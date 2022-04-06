@@ -1,5 +1,7 @@
 package com.hit.wi.jni;
 
+import android.util.Log;
+
 import com.hit.wi.util.CharUtil;
 
 import java.util.HashSet;

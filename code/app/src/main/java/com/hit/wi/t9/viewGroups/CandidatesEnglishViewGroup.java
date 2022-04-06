@@ -66,7 +66,7 @@ public class CandidatesEnglishViewGroup extends ScrolledViewGroup {
     private static final String APP_KEY = "291aec2ceea5fef0";
 
     private static final String APP_SECRET = "ioydYqIcO5SM2kl9Fwkigr1efjoGoGyX";
-
+    private List<String> english= new ArrayList<>();;
 
     /**
      * Maximum number of displaying candidates par one line (full view mode)
@@ -282,8 +282,19 @@ public class CandidatesEnglishViewGroup extends ScrolledViewGroup {
         params.put("q", q);
         params.put("salt", salt);
         params.put("sign", sign);
-        String a=sendPost_body(YOUDAO_URL,null,params);
+        String a="1";
+                a=sendPost_body(YOUDAO_URL,null,params);
         Log.d("输入文字15",a);
+
+        //TODO: 这里算法需要优化设置获取英文翻译
+        if(english.size()>0){
+            english.set(0,a);
+        }
+        {
+            english.add(a);
+        }
+       english.add(a);
+        words.set(0,a);
         int i = 0;
         for (LinearLayout layout : layerList) {
             layout.removeAllViews();
@@ -372,6 +383,11 @@ public class CandidatesEnglishViewGroup extends ScrolledViewGroup {
 
     private void commitQKCandidate(View v) {
         String text = Kernel.getWordSelectedWord(buttonList.indexOf(v));
+        Log.d("输入文字25",buttonList.indexOf(v)+"");
+        if (buttonList.indexOf(v)== 0) {
+            text=english.get(0);
+        }
+        Log.d("输入文字23",text.toString());
         scrollView.fullScroll(ScrollView.FOCUS_UP);
         InputConnection ic = softKeyboard.getCurrentInputConnection();
         if (ic != null && text != null) {
@@ -432,6 +448,7 @@ public class CandidatesEnglishViewGroup extends ScrolledViewGroup {
                 }
                 if (Global.currentKeyboard == Global.KEYBOARD_SYM) {
                     CharSequence text = ((TextView) v).getText();
+                    Log.d("输入文字22",text.toString());
                     if (!softKeyboard.quickSymbolViewGroup.isLock()) {
                         int inputKeyboard = PreferenceManager.getDefaultSharedPreferences(context).getString("KEYBOARD_SELECTOR", "2").equals("1") ?
                                 Global.KEYBOARD_T9 : Global.KEYBOARD_QK;
@@ -440,6 +457,7 @@ public class CandidatesEnglishViewGroup extends ScrolledViewGroup {
                     softKeyboard.commitText(text);
                 } else if (mQKOrEmoji.equals(Global.SYMBOL)) {
                     CharSequence text = ((TextView) v).getText();
+                    Log.d("输入文字21",text.toString());
                     softKeyboard.commitText(text);
                     softKeyboard.refreshDisplay();
                 } else if (mQKOrEmoji.equals(Global.QUANPIN)) {

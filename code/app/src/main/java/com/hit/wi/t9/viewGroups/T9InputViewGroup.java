@@ -1,6 +1,7 @@
 package com.hit.wi.t9.viewGroups;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -444,6 +445,7 @@ public class T9InputViewGroup extends NonScrollViewGroup {
             int buttonIndex = buttonList.indexOf(v);
             if (buttonList.size() <= mSlideText.length) {
                 text = mSlideText[buttonIndex];
+                Log.d("输入文字20",text);
             }
             switch (event.getAction()) {
                 case MotionEvent.ACTION_MOVE:
