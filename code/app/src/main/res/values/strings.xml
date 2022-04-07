@@ -169,7 +169,7 @@
     <string name="guide_page5_text2">更快速 最懂你</string>
     <string name="guide_page6_text1">开启TL</string>
     <string name="guide_page6_text2">选择TL</string>
-    <string name="guide_page6_success">TL 有您更精彩</string>
+    <string name="guide_page6_success">TL 有你更精彩</string>
     <string name="title_part1">第一步：先勾选TL输入法</string>
     <string name="button_check_off">去勾选</string>
     <string name="button_check_on">已经完成</string>
@@ -183,7 +183,7 @@
     <string name="clear_contact_dict">已清除通讯录词典</string>
 
     <!-- 数据备份部分 -->
-    <string name="back_up_folder_name">wi_inputmethod</string>
+    <string name="back_up_folder_name">TL_inputmethod</string>
     <string name="back_up_success">本地备份成功</string>
     <string name="back_up_failed">本地备份失败</string>
     <string name="not_found_sd_card">未找到SD卡</string>
